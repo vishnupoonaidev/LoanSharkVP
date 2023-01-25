@@ -1,0 +1,87 @@
+:root{
+    --primary-color: #43474e;
+    --secondary-color: #009DC4;
+    --dark-color: #222020;
+    --white-color: #EFEFEF;
+    --logo-second-color: #009DC4;
+    --logo-promary-color: #EFEFEF;
+}
+
+body{
+    color:var(--dark-color)
+}
+
+nav{
+    background-color: var(--dark-color);
+}
+
+footer{
+    background-color: var(--dark-color);
+}
+
+h2,h3,h4,h5,h6{
+    color: var(--dark-color);
+}
+
+h1{
+    color: var(--logo-second-color);
+}
+
+footer{
+    padding-right: 1rem;
+
+}
+
+footer .social>a{
+    color: var(--logo-second-color);
+    opacity: 0.75;
+    
+}
+
+footer .social>a:hover{
+    opacity: 0.9;
+    color: var(--logo-promary-color);
+}
+
+.bsicon{
+    color: #563d7c;
+}
+
+.jsicon{
+    color: #f0db4f;
+}
+
+.cssIcon{
+    color: #00ACEE;
+}
+
+.html5icon{
+    color: #e34c26;
+}
+
+.checklist >li i{
+    color: var(--logo-second-color)
+
+}
+
+code[class*="language-"],
+        pre[class*="language-"] {
+        white-space: pre-wrap;
+        word-break: break-all;
+        word-wrap: break-word;
+}
+
+
+main>.container {
+    padding: 60px 15px 0;
+    margin-bottom: 5rem;
+}
+.sticky-footer {
+    position: sticky;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+}
+
+
+
