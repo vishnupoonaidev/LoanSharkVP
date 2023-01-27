@@ -17,7 +17,11 @@ function getValues()
         let loanObj = {};    
 
      /// calculate Load totals
-     displayLoanTotals =  calcualteLoanTotals(inputLoanAmount,inputPayments,inputRate);
+     loanObj =  calcualteLoanTotals(inputLoanAmount,inputPayments,inputRate);
+     
+     //display loan totals
+     displayLoanTotals(loanObj);
+
 
 
       /// calcualte loan amortization
@@ -30,24 +34,46 @@ function getValues()
 
 function calcualteLoanTotals(LoanAmount,Payments,Rate){
 
+     let returnObj = {};
 
       let totalPrinciple = LoanAmount;
-      let montlyCost = (LoanAmount)*(Rate/1200)/Math.pow(1-(1+Rate/1200),Payments);
-      let totalInterest = (LoanAmount)*(Rate/1200)/(1-(1+Rate/1200)^Payments) - LoanAmount;
+      let montlyCost = (LoanAmount)*(Rate/1200)/(1-Math.pow((1+Rate/1200),-Payments));
       let totalCost = montlyCost*Payments;
+      let totalInterest = totalCost-LoanAmount;
 
+    totalPrinciple = totalPrinciple.toFixed(2);
+    montlyCost = montlyCost.toFixed(2);
+    totalCost = totalCost.toFixed(2);
+    totalInterest = totalInterest.toFixed(2);
 
- return [totalPrinciple,totalInterest,totalCost,montlyCost];
+     returnObj.TP = totalPrinciple;
+     returnObj.MC = montlyCost;
+     returnObj.TC = totalCost;
+     returnObj.TI = totalInterest;
+
+ return returnObj;
 }
 
 
-function displayLoanTotals(totalPrinciple,totalInterest,totalCost,montlyCost){
 
-    document.getElementById("totalPrinciple").innerHTML = totalPrinciple;
-    document.getElementById("totalInterest").innerHTML = totalInterest;
-    document.getElementById("totalCost").innerHTML = totalCost;
-    document.getElementById("monthlyPayments").innerHTML = montlyCost;
+  const formatter = new Intl.NumberFormat('en-US', {
+    style: 'currency',
+    currency: 'USD',
+  
+    // These options are needed to round to whole numbers if that's what you want.
+    //minimumFractionDigits: 0, // (this suffices for whole numbers, but will print 2500.10 as $2,500.1)
+    //maximumFractionDigits: 0, // (causes 2500.99 to be printed as $2,501)
+  });
 
+
+function displayLoanTotals(totalLoadInfo){
+
+    
+
+    document.getElementById("totalPrinciple").innerHTML = formatter.format(totalLoadInfo.TP);
+    document.getElementById("totalInterest").innerHTML = formatter.format(totalLoadInfo.TI);
+    document.getElementById("totalCost").innerHTML = formatter.format(totalLoadInfo.TC);
+    document.getElementById("monthlyPayments").innerHTML = formatter.format(totalLoadInfo.MC);
 
 }
 
