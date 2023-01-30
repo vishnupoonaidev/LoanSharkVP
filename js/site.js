@@ -22,9 +22,9 @@ function getValues()
      //display loan totals
      displayLoanTotals(loanObj);
 
-
-
       /// calcualte loan amortization
+      generateAmoritzationLoanDetails(inputLoanAmount,inputPayments,inputRate);
+
 
     }else{
         alert("Please enter only numbers into the input boxes.")
@@ -76,6 +76,61 @@ function displayLoanTotals(totalLoadInfo){
     document.getElementById("monthlyPayments").innerHTML = formatter.format(totalLoadInfo.MC);
 
 }
+
+
+function generateAmoritzationLoanDetails(LoanAmount,Payments,Rate){
+
+let paymentValues = [];
+let principleValues = [];
+let interestValues = [];
+let totalInterestValues = [];
+let balanceValues = [];
+let monthValues = [];
+
+
+let montlyCost = (LoanAmount)*(Rate/1200)/(1-Math.pow((1+Rate/1200),-Payments));
+let interest = 0;
+let totalInterest = 0;
+let Balance = montlyCost*Payments;
+let principle = 0;
+let remainingBalance = Balance;
+
+//test display remove after
+let templateRows = "";
+templateRows = `<tr bgcolor="#ddd"><td>Month</td><td>Payment</td><td>Principal</td><td>Interest</td><td>Total Interest</td><td>Balance</td></tr>`;
+//test display remove after
+
+for (let index = 0; index < Payments; index++) {
+
+let rb =  remainingBalance -= montlyCost;
+
+monthValues.push(index+1);
+paymentValues.push(((LoanAmount)*(Rate/1200)/(1-Math.pow((1+Rate/1200),-Payments))).toFixed(2)); 
+balanceValues.push(rb.toFixed(2));
+interestValues.push(((rb)*Rate/1200).toFixed(2));
+principleValues.push((montlyCost-((rb)*Rate/1200)).toFixed(2));
+let totalInterest = (rb)*Rate/1200;
+totalInterest += ((rb)*Rate/1200);
+totalInterestValues.push((totalInterest).toFixed(2));
+
+////to display test
+
+
+templateRows += `<tr><td>${monthValues[index]}</td><td>${paymentValues[index]}</td><td>${principleValues[index]}</td><td>${interestValues[index]}</td><td>${totalInterestValues[index]}</td><td>${balanceValues[index]}</td></tr>`;
+
+  
+}
+
+
+document.getElementById("results").innerHTML = templateRows;
+
+
+return monthValues,paymentValues,principleValues,interestValues,totalInterestValues,balanceValues;
+
+}
+
+
+
 
 
 function displayData(fbData){

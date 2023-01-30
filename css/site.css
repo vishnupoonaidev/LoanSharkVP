@@ -84,4 +84,7 @@ main>.container {
 }
 
 
-
+td {
+    text-align: center;
+    vertical-align: middle;
+  }
